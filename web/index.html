@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Base href (Flutter tarafından replace edilir) -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <!-- Basic meta -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Free LUFS Meter & AI Loudness Analyzer | Loudence</title>
+  <meta name="description"
+        content="Free LUFS meter and AI-powered loudness analyzer. Check Spotify, YouTube and Apple Music compatibility instantly. No signup required.">
+
+  <!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
+  <meta property="og:title" content="Free LUFS Meter & AI Loudness Analyzer | Loudence">
+  <meta property="og:description"
+        content="Analyze your music loudness for Spotify, YouTube & Apple Music. Instant results, no signup required.">
+  <meta property="og:image" content="https://yourdomain.com/og-image.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.com">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- PWA / Mobile -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Loudence">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Minimal loading style -->
+  <style>
+    body {
+      margin: 0;
+      background: #0b1020;
+    }
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #e8f0ff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    #loading img {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+    }
+    #loading p {
+      font-size: 14px;
+      opacity: 0.85;
+      letter-spacing: 0.2px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loading screen (Flutter gelince otomatik kaybolur) -->
+  <div id="loading">
+    <img src="favicon.png" alt="Loudence logo">
+    <p>Loading Loudence…</p>
+  </div>
+
+  <!-- Flutter bootstrap -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
