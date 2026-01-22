@@ -7,6 +7,7 @@ import '../widgets/faq_section.dart'; // <-- sende hangi path ise onu kullan
 
 import 'early_access.dart';
 import '../widgets/loudence_header_bar.dart';
+import '../legal/legal_footer.dart';
 
 class CompatibilityPage extends StatelessWidget {
   final AnalysisResult result;
@@ -252,21 +253,7 @@ class CompatibilityPage extends StatelessWidget {
 
                           const SizedBox(height: 18),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              _FooterLink(text: 'Terms'),
-                              SizedBox(width: 10),
-                              Text(
-                                '|',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 120, 128, 144),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              _FooterLink(text: 'Privacy Policy'),
-                            ],
-                          ),
+                          const LegalFooter(),
                         ],
                       ),
                     ),

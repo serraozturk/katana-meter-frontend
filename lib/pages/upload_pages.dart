@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../app/api_config.dart';
 import 'dart:async';
+import '../legal/legal_footer.dart';
 
 class UploadPage extends StatefulWidget {
   final VoidCallback? onReset;
@@ -170,35 +171,11 @@ class _UploadPageState extends State<UploadPage> {
     }
   }
 
-  void _openTerms() {
-    showDialog(
-      context: context,
-      builder:
-          (_) => const _SimpleModal(
-            title: 'Terms',
-            body:
-                'Terms content will be provided.\n\nFor now this is a placeholder modal.',
-          ),
-    );
-  }
-
   void clearSelectedFile() {
     setState(() {
       _file = null;
       _error = null;
     });
-  }
-
-  void _openPrivacy() {
-    showDialog(
-      context: context,
-      builder:
-          (_) => const _SimpleModal(
-            title: 'Privacy Policy',
-            body:
-                'Privacy Policy content will be provided.\n\nFor now this is a placeholder modal.',
-          ),
-    );
   }
 
   @override
@@ -350,24 +327,7 @@ class _UploadPageState extends State<UploadPage> {
 
                           const SizedBox(height: 20),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _FooterLink(text: 'Terms', onTap: _openTerms),
-                              const SizedBox(width: 10),
-                              const Text(
-                                '|',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 120, 128, 144),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              _FooterLink(
-                                text: 'Privacy Policy',
-                                onTap: _openPrivacy,
-                              ),
-                            ],
-                          ),
+                          const LegalFooter(),
                         ],
                       ),
                     ),
@@ -629,59 +589,6 @@ class _SelectedState extends StatelessWidget {
               decorationColor: const Color.fromARGB(255, 90, 170, 255),
             ),
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class _FooterLink extends StatelessWidget {
-  final String text;
-  final VoidCallback onTap;
-
-  const _FooterLink({required this.text, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 12,
-          color: Color.fromARGB(255, 150, 158, 174),
-          decoration: TextDecoration.underline,
-        ),
-      ),
-    );
-  }
-}
-
-class _SimpleModal extends StatelessWidget {
-  final String title;
-  final String body;
-
-  const _SimpleModal({required this.title, required this.body});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: const Color.fromARGB(255, 18, 21, 28),
-      title: Text(
-        title,
-        style: const TextStyle(color: Color.fromARGB(255, 220, 230, 245)),
-      ),
-      content: Text(
-        body,
-        style: const TextStyle(color: Color.fromARGB(255, 180, 190, 206)),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.maybePop(context);
-          },
-
-          child: const Text('Close'),
         ),
       ],
     );

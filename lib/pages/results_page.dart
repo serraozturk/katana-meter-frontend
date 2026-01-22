@@ -9,6 +9,7 @@ import '../widgets/faq_section.dart';
 import '../widgets/loudence_header_bar.dart';
 import '../widgets/metric_info_popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../legal/legal_footer.dart';
 
 // NOTE: UploadPage’de kullandığın FAQ widget’ını aynı sayfada tekrar kullanıyorum.
 // En doğrusu: _FaqSection'ı widgets/faq_section.dart'a taşıyıp iki sayfada import etmek.
@@ -260,35 +261,7 @@ class ResultsPage extends StatelessWidget {
                             const SizedBox(height: 18),
 
                             // Footer (istersen UploadPage’deki ile aynı bırakabiliriz)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  'Terms',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromARGB(255, 150, 158, 174),
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  '|',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 120, 128, 144),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  'Privacy Policy',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromARGB(255, 150, 158, 174),
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            const LegalFooter(),
                           ],
                         ),
                       ),
@@ -467,14 +440,15 @@ class _MetricsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final r = result;
     String fmtNum(double v, {int frac = 1}) => v.toStringAsFixed(frac);
+    final lufs = r != null ? lufsVisual(r.lufs) : null;
 
     final items = [
       _MetricItem(
         title: 'LUFS',
         value: r != null ? fmtNum(r.lufs) : '--',
         unit: 'LUFS',
-        badge: r?.loudnessLabel ?? '...',
-        valueColor: const Color(0xFF7CC4FF),
+        badge: lufs?.badge ?? '...',
+        valueColor: lufs?.color ?? const Color(0xFF7CC4FF),
       ),
 
       _MetricItem(
@@ -641,7 +615,11 @@ class _MetricCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: isMobile ? 22 : 28,
                       fontWeight: FontWeight.w900,
-                      color: c,
+                      color:
+                          item.title == 'LUFS'
+                              ? item
+                                  .valueColor // 🔥 DOĞRUDAN LUFS RENK
+                              : statusColor(item.badge),
                     ),
                   ),
                   if (item.unit.isNotEmpty)
@@ -675,7 +653,11 @@ class _MetricCard extends StatelessWidget {
   // 🏷️ BADGE (ORTAK)
   // =========================
   Widget _badge(String text) {
-    final c = statusColor(text);
+    final c =
+        item.title == 'LUFS'
+            ? item
+                .valueColor // 🔥 sadece LUFS
+            : statusColor(item.badge);
 
     return Container(
       constraints: const BoxConstraints(minHeight: 48),
@@ -1139,4 +1121,34 @@ String deltaESentence(AnalysisResult r) {
     return 'Energy balance is stable with no aggressive compression.';
   }
   return 'Energy balance shows noticeable deviation and may require further review.';
+}
+
+class LufsVisual {
+  final String badge;
+  final Color color;
+  const LufsVisual(this.badge, this.color);
+}
+
+LufsVisual lufsVisual(double lufs) {
+  // 🟢 BALANCED
+  if (lufs >= -15.5 && lufs <= -13.5) {
+    return const LufsVisual(
+      'Balanced',
+      Color(0xFF3DDC97), // green
+    );
+  }
+
+  // 🟡 NEEDS ADJUSTMENT
+  if ((lufs >= -20.0 && lufs < -15.5) || (lufs > -13.5 && lufs <= -11.0)) {
+    return const LufsVisual(
+      'Needs Adjustment',
+      Color(0xFFFFC857), // amber
+    );
+  }
+
+  // 🔴 FAR FROM TARGET
+  return const LufsVisual(
+    'Far from Target',
+    Color(0xFFFF6B6B), // red
+  );
 }

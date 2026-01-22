@@ -9,6 +9,8 @@ import '../widgets/status_bar.dart';
 import '../widgets/faq_section.dart';
 import '../widgets/loudence_header_bar.dart';
 import 'package:http/http.dart' as http;
+import '../pages/legal_part.dart';
+import '../legal/legal_footer.dart';
 
 class EarlyAccessPage extends StatefulWidget {
   const EarlyAccessPage({super.key});
@@ -29,8 +31,18 @@ class _EarlyAccessPageState extends State<EarlyAccessPage> {
   @override
   void initState() {
     super.initState();
-    _termsTap = TapGestureRecognizer()..onTap = () {};
-    _privacyTap = TapGestureRecognizer()..onTap = () {};
+
+    _termsTap =
+        TapGestureRecognizer()
+          ..onTap = () {
+            showLegalDialog(context, LegalType.terms);
+          };
+
+    _privacyTap =
+        TapGestureRecognizer()
+          ..onTap = () {
+            showLegalDialog(context, LegalType.privacy);
+          };
   }
 
   @override
@@ -501,6 +513,10 @@ class _EarlyAccessPageState extends State<EarlyAccessPage> {
                               child: const FaqSection(),
                             ),
                           ),
+                      const SizedBox(height: 18),
+
+                      // Footer (istersen UploadPage’deki ile aynı bırakabiliriz)
+                      const LegalFooter(),
                     ],
                   ),
                 ),
