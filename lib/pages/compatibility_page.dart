@@ -479,23 +479,3 @@ Widget _buildStatusBadge({
     ),
   );
 }
-
-class _FooterLink extends StatelessWidget {
-  final String text;
-  const _FooterLink({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 12,
-          color: Color.fromARGB(255, 150, 158, 174),
-          decoration: TextDecoration.underline,
-        ),
-      ),
-    );
-  }
-}

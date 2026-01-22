@@ -557,7 +557,6 @@ class _MetricCard extends StatelessWidget {
   Widget _metricRow(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 520;
     final isOverall = item.title == 'Overall';
-    final c = statusColor(item.badge);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
