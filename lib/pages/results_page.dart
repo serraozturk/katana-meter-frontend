@@ -8,6 +8,7 @@ import 'early_access.dart';
 import '../widgets/faq_section.dart';
 import '../widgets/loudence_header_bar.dart';
 import '../widgets/metric_info_popup.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 // NOTE: UploadPage’de kullandığın FAQ widget’ını aynı sayfada tekrar kullanıyorum.
 // En doğrusu: _FaqSection'ı widgets/faq_section.dart'a taşıyıp iki sayfada import etmek.
@@ -562,8 +563,6 @@ class _MetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isOverall = item.title == 'Overall';
-
     return Opacity(
       opacity: enabled ? 1.0 : 0.65,
       child: Container(
@@ -573,24 +572,8 @@ class _MetricCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           color: const Color.fromARGB(255, 24, 27, 35).withOpacity(0.55),
 
-          border: Border.all(
-            color:
-                isOverall
-                    ? const Color(0xFF4FAAF7).withOpacity(0.55)
-                    : Colors.white.withOpacity(0.10),
-            width: isOverall ? 1.4 : 1,
-          ),
-
-          boxShadow:
-              isOverall
-                  ? [
-                    BoxShadow(
-                      color: const Color(0xFF4FAAF7).withOpacity(0.18),
-                      blurRadius: 18,
-                      spreadRadius: 1,
-                    ),
-                  ]
-                  : [],
+          border: Border.all(color: Colors.white.withOpacity(0.10), width: 1),
+          boxShadow: const [],
         ),
         child: _metricRow(context),
       ),
@@ -703,18 +686,17 @@ class _MetricCard extends StatelessWidget {
         border: Border.all(color: c.withOpacity(0.45)),
       ),
       child: Center(
-        child: Text(
+        child: AutoSizeText(
           titleCase(text),
-          maxLines: 2, // ⬅️ İKİ SATIR
-          softWrap: true,
-          overflow: TextOverflow.visible, // ⬅️ ... YOK
+          maxLines: 2, // ✅ iki satır serbest
+          minFontSize: 9, // 🔥 gerekirse daha da küçülür
+          maxFontSize: 14,
+          stepGranularity: 1, // web + iOS güvenli
+          softWrap: true, // satır kırılabilir
+          wrapWords: false, // 🔒 kelime ASLA bölünmez
+          overflow: TextOverflow.visible, // ❌ üç nokta YOK
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 13.5, // ⬅️ biraz büyüdü
-            color: c,
-            fontWeight: FontWeight.w700,
-            height: 1.2,
-          ),
+          style: TextStyle(color: c, fontWeight: FontWeight.w700, height: 1.15),
         ),
       ),
     );
